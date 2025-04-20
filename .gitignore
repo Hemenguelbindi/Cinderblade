@@ -1,0 +1,35 @@
+# === Rust ===
+/target/
+**/*.rs.bk
+Cargo.lock
+
+# === IDEs and editors ===
+.idea/
+.vscode/
+*.sw?
+
+# === Bevy specific ===
+# Bevy иногда кэширует шейдеры и ассеты
+assets/.DS_Store
+assets/*.tmp
+assets/cache/
+assets/**/*.import.meta
+
+# === OS-specific ===
+.DS_Store
+Thumbs.db
+
+# === Logs ===
+*.log
+
+# === Backups ===
+*~
+*.bak
+*.old
+*.orig
+
+# === Optional: compiled resources ===
+assets/**/*.ogg
+assets/**/*.png
+assets/**/*.ttf
+# (если ты хранишь ассеты отдельно — не забудь убрать этот блок)
