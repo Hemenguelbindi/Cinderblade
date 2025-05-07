@@ -53,7 +53,7 @@ fn spawn_main_button(commands: &mut Commands, asset_server: Res<AssetServer>) ->
     };
 
     let container = commands.spawn(container_node).id();
-    let button = commands.spawn((button_node, BorderColor(Color::BLACK), BackgroundColor(Color::srgb(0.3, 0.3, 0.3)), TextLayout::new_with_justify(JustifyText::Center))).id();
+    let button = commands.spawn((button_node, Button, BorderColor(Color::BLACK), BackgroundColor(Color::srgb(0.3, 0.3, 0.3)), TextLayout::new_with_justify(JustifyText::Center))).id();
 
     let button_text = commands
     .spawn((button_text_node, button_text_color, button_text_font))
@@ -62,4 +62,27 @@ fn spawn_main_button(commands: &mut Commands, asset_server: Res<AssetServer>) ->
     commands.entity(container).add_children(&[button]);
 
     container
+}
+
+
+pub fn button_interaction_system(
+    mut interaction_query: Query<
+        (&Interaction, &mut BackgroundColor),
+        (Changed<Interaction>, With<Button>),
+    >,
+) {
+    for (interaction, mut color) in &mut interaction_query {
+        match *interaction {
+            Interaction::Pressed => {
+                *color = BackgroundColor(Color::srgb(0.1, 0.1, 0.1));
+                println!("Кнопка нажата!");
+            }
+            Interaction::Hovered => {
+                *color = BackgroundColor(Color::srgb(0.4, 0.4, 0.4));
+            }
+            Interaction::None => {
+                *color = BackgroundColor(Color::srgb(0.3, 0.3, 0.3));
+            }
+        }
+    }
 }
