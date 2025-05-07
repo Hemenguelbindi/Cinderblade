@@ -5,6 +5,6 @@ use crate::prelude::*;
 pub enum GameState {
     #[default]
     MainMenu,
-    // InGame,
+    InGame,
     // Paused,
 }

@@ -1,4 +1,5 @@
 use crate::prelude::*;
+use crate::states::GameState;
 
 pub fn spawn_main_menu(mut commands: Commands, asset_server: Res<AssetServer>) {
     let root = spawn_menu_root(&mut commands);
@@ -28,15 +29,15 @@ fn spawn_main_button(commands: &mut Commands, asset_server: Res<AssetServer>) ->
     let font = asset_server.load("fonts/Roboto-VariableFont_wdth,wght.ttf");
     
     let container_node = Node {
-        width: Val::Px(100.),
-        height: Val::Px(100.),
+        width: Val::Px(250.),
+        height: Val::Px(250.),
         align_items: AlignItems::Center,
         justify_content: JustifyContent::Center,
         ..default()
     };
 
     let button_node = Node{
-        width: Val::Px(150.0),
+        width: Val::Px(250.0),
         height: Val::Px(65.),
         border: UiRect::all(Val::Px(5.0)),
         justify_content: JustifyContent::Center,
@@ -70,12 +71,15 @@ pub fn button_interaction_system(
         (&Interaction, &mut BackgroundColor),
         (Changed<Interaction>, With<Button>),
     >,
+    mut next_state: ResMut<NextState<GameState>>
 ) {
     for (interaction, mut color) in &mut interaction_query {
         match *interaction {
             Interaction::Pressed => {
                 *color = BackgroundColor(Color::srgb(0.1, 0.1, 0.1));
                 println!("Кнопка нажата!");
+                
+                next_state.set(GameState::InGame);
             }
             Interaction::Hovered => {
                 *color = BackgroundColor(Color::srgb(0.4, 0.4, 0.4));
